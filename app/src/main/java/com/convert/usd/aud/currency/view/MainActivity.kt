@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
         mainActivityViewModel.getRate(APIKEY,"USD","AUD",9)
         mainActivityViewModel.value.observe(this){
-            Log.e("data",""+it.value)
+            Log.e("rate",""+it)
         }
     }
 }
