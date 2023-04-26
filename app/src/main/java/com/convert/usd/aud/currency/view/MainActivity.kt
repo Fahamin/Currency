@@ -22,9 +22,9 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
-        mainActivityViewModel.getRate(APIKEY,"USD","AUD",9)
+        mainActivityViewModel.getRate(APIKEY,"USD","BDT",9)
         mainActivityViewModel.value.observe(this){
-            Log.e("rate",""+it)
+            Log.e("rate",""+it.body()?.rateResponse)
         }
     }
 }

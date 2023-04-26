@@ -2,7 +2,7 @@
 import com.google.gson.annotations.SerializedName
 
 
-data class Response<T>(
+data class RateResponse<T>(
 
   @SerializedName("timestamp" ) var timestamp : Int?    = null,
   @SerializedName("date"      ) var date      : String? = null,

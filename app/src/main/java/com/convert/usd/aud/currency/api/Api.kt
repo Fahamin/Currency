@@ -1,7 +1,8 @@
 package com.convert.usd.aud.currencyconverter.api
 
 import DataResponse
-import Response
+import RateResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query
 
