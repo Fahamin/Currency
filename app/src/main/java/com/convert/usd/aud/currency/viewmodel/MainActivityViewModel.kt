@@ -1,8 +1,7 @@
 package com.convert.usd.aud.currencyconverter.viewmodel
 
 
-import DataResponse
-import RateResponse
+import com.convert.usd.aud.currency.model.convertion.DataResponse
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

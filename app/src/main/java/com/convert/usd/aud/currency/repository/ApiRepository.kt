@@ -18,4 +18,14 @@ class ApiRepository @Inject constructor(private var api: Api) {
 
     }
 
+
+    suspend fun getLatestData(apiKey: String, from: String, to: String, amount: Int) = flow {
+        var response = api.getRate(apiKey, from, to, amount)
+        emit(response)
+        Log.e("rate",""+response)
+
+    }.catch { e ->
+        Log.e("rate",""+e.message)
+
+    }
 }

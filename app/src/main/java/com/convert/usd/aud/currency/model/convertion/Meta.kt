@@ -1,4 +1,4 @@
-
+package com.convert.usd.aud.currency.model.convertion
 import com.google.gson.annotations.SerializedName
 
 
