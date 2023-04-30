@@ -6,5 +6,4 @@ class Constance {
         var APIKEY = "087b6d29228a2098ca7451eada1abafc"
     }
 
-
 }

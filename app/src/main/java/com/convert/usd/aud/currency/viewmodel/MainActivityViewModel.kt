@@ -1,6 +1,7 @@
 package com.convert.usd.aud.currencyconverter.viewmodel
 
 
+import LatestResponse
 import com.convert.usd.aud.currency.model.convertion.DataResponse
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -15,12 +16,26 @@ import javax.inject.Inject
 class MainActivityViewModel
 @Inject constructor(private var apiRepository: ApiRepository) : ViewModel() {
 
-    var value = MutableLiveData<Response<DataResponse>>()
+    var convertValue = MutableLiveData<Response<DataResponse>>()
+    var latestValue = MutableLiveData<Response<LatestResponse>>()
 
-    fun getRate(apikey: String, from: String, to: String, amount: Int) {
+    fun getConvertValue(apikey: String, from: String, to: String, amount: Int) {
         viewModelScope.launch {
-            apiRepository.getCalculation(apikey, from, to, amount).collect() {
-                value.postValue(it)
+            apiRepository.getConvertValue(apikey, from, to, amount).collect() {
+                convertValue.postValue(it)
+            }
+
+        }
+    }
+
+    init {
+        // you can call fun from here
+    }
+
+    fun getLatestRate(apiKey: String, base: String, symbols: String) {
+        viewModelScope.launch {
+            apiRepository.getLatestData(apiKey, base, symbols).collect() {
+                latestValue.postValue(it)
             }
 
         }
