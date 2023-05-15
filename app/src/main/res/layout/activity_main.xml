@@ -25,11 +25,11 @@
             android:orientation="horizontal">
 
 
-            <androidx.appcompat.widget.AppCompatSpinner
+            <Spinner
                 android:id="@+id/sp_From"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:entries="@array/symbols" />
+                 />
         </LinearLayout>
 
         <androidx.appcompat.widget.AppCompatImageView

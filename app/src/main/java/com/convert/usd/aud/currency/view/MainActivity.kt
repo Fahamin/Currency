@@ -26,7 +26,6 @@ class MainActivity : AppCompatActivity() {
     lateinit var to: String
 
     lateinit var currencylist: List<String>
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -58,10 +57,12 @@ class MainActivity : AppCompatActivity() {
             android.R.layout.simple_spinner_item, currencylist
         )
 
-        from = currencylist[0]
-        to = currencylist[0]
-
         binding.spFrom.adapter = arrayAdapter
+        binding.spTo.adapter = arrayAdapter
+
+          from = currencylist[0]
+            to = currencylist[0]
+
 
         binding.spFrom.onItemSelectedListener
 
@@ -79,7 +80,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        binding.spTo.adapter = arrayAdapter
 
         binding.spTo.onItemSelectedListener
 
