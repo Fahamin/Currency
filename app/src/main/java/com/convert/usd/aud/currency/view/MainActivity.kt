@@ -60,8 +60,8 @@ class MainActivity : AppCompatActivity() {
         binding.spFrom.adapter = arrayAdapter
         binding.spTo.adapter = arrayAdapter
 
-          from = currencylist[0]
-            to = currencylist[0]
+        from = currencylist[0]
+        to = currencylist[0]
 
 
         binding.spFrom.onItemSelectedListener
@@ -103,7 +103,8 @@ class MainActivity : AppCompatActivity() {
         //  symbols = mutableListOf("AED", "CAD", "BDT", "EUR")
         //  symbols.add("INR")
 
-        var ss = "AED" + "," + "BDT" + "," + "CAD"
+        var ss = "AUD" + "," + "EUR" + "," + "CAD" + "," + "GBP" + "," + "CHF" + ","+ "JPY" + "," + "NZD" + "," + "CNY"
+
         mainActivityViewModel.getLatestRate(APIKEY, "USD", ss)
         mainActivityViewModel.latestValue.observe(this) {
             Log.e("rate", "" + it.body()?.response)
@@ -111,12 +112,17 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun callConvert(from: String, to: String) {
+
         mainActivityViewModel.getConvertValue(APIKEY, from, to, 1)
         mainActivityViewModel.convertValue.observe(this) {
             Log.e("latestRate", "" + it.body()?.rateResponse)
             binding.llResult.visibility = View.VISIBLE
 
-            binding.resultTV.text = it.body()?.rateResponse?.value.toString()
+            binding.resultTV.text =
+                "1 " + from + " = " + String.format(
+                    "%.3f",
+                    it.body()?.rateResponse?.value
+                ) + " " + to
         }
     }
 }
