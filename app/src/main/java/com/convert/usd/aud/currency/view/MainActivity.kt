@@ -25,11 +25,12 @@ class MainActivity : AppCompatActivity() {
     lateinit var binding: ActivityMainBinding
     lateinit var mainActivityViewModel: MainActivityViewModel
     lateinit var symbols: MutableList<String>
-
     lateinit var from: String
     lateinit var to: String
     lateinit var lattestList: MutableList<RVmodel>
     lateinit var currencylist: List<String>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
