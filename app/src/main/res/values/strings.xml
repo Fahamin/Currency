@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Currency</string>
+    <string name="app_name">Forex Rate</string>
     <string name="convert">Convert</string>
 
     <string-array  name="symbols">
@@ -168,4 +168,5 @@
         <item>ZMK</item>
         <item>ZWL</item>
     </string-array>
+
 </resources>

@@ -1,12 +1,10 @@
 package com.convert.usd.aud.currencyconverter.view
 
-import LatestDataResponse
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,7 +15,6 @@ import com.convert.usd.aud.currency.model.RVmodel
 import com.convert.usd.aud.currencyconverter.utill.Constance.Companion.APIKEY
 import com.convert.usd.aud.currencyconverter.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import java.util.Objects
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -36,6 +33,11 @@ class MainActivity : AppCompatActivity() {
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        supportActionBar?.hide()
+
+
+        binding.logoSign.text = "Forex Exchange"
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
 
