@@ -1,10 +1,18 @@
 package com.convert.usd.aud.currencyconverter.view
 
+import android.app.Dialog
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.View
-import android.widget.AdapterView
+import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
+import android.widget.EditText
+import android.widget.ImageButton
+import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -15,6 +23,7 @@ import com.convert.usd.aud.currency.model.RVmodel
 import com.convert.usd.aud.currencyconverter.utill.Constance.Companion.APIKEY
 import com.convert.usd.aud.currencyconverter.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
+
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -27,7 +36,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var lattestList: MutableList<RVmodel>
     lateinit var currencylist: List<String>
 
-
+    lateinit var dialog: Dialog
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -37,12 +46,13 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.hide()
 
 
-        binding.logoSign.text = "Forex Exchange"
+        binding.logoSign.text = "Forex Exchange Rate"
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
 
-        currencylist = resources.getStringArray(R.array.symbols).toList()
-        setSpiner()
+        currencylist =
+            resources.getStringArray(com.convert.usd.aud.currency.R.array.symbols).toList()
+        setDialog()
 
         binding.convertBtn.setOnClickListener(View.OnClickListener {
             callConvert(from, to)
@@ -55,47 +65,139 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    private fun setDialog() {
+        binding.llFrom.setOnClickListener(View.OnClickListener {
+            dialog = Dialog(this@MainActivity)
+            dialog.setContentView(com.convert.usd.aud.currency.R.layout.dialog_searchable_spinner)
+
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+
+            val editText =
+                dialog.findViewById<EditText>(R.id.edit_text)
+            val cancle =
+                dialog.findViewById<ImageButton>(R.id.btnCancle)
+            val listView =
+                dialog.findViewById<ListView>(R.id.list_view)
+
+            cancle.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this@MainActivity,
+                android.R.layout.simple_list_item_1,
+                currencylist
+            )
+            listView.adapter = adapter
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    adapter.filter.filter(s)
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+
+            listView.onItemClickListener =
+                OnItemClickListener { parent, view, position, id ->
+                    binding.spFrom.text = adapter.getItem(position).toString()
+                    from = adapter.getItem(position).toString()
+                    dialog.dismiss()
+                }
+        })
+
+        binding.llTo.setOnClickListener(View.OnClickListener {
+            dialog = Dialog(this@MainActivity)
+            dialog.setContentView(com.convert.usd.aud.currency.R.layout.dialog_searchable_spinner)
+            dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+            dialog.show()
+            val cancle =
+                dialog.findViewById<ImageButton>(R.id.btnCancle)
+            val editText =
+                dialog.findViewById<EditText>(R.id.edit_text)
+            val listView =
+                dialog.findViewById<ListView>(R.id.list_view)
+            cancle.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+
+            val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
+                this@MainActivity,
+                android.R.layout.simple_list_item_1,
+                currencylist
+            )
+            listView.adapter = adapter
+            editText.addTextChangedListener(object : TextWatcher {
+                override fun beforeTextChanged(
+                    s: CharSequence,
+                    start: Int,
+                    count: Int,
+                    after: Int
+                ) {
+                }
+
+                override fun onTextChanged(s: CharSequence, start: Int, before: Int, count: Int) {
+                    adapter.filter.filter(s)
+                }
+
+                override fun afterTextChanged(s: Editable) {}
+            })
+
+            listView.onItemClickListener =
+                OnItemClickListener { parent, view, position, id ->
+                    binding.spTo.text = adapter.getItem(position).toString()
+                    to = adapter.getItem(position).toString()
+                    dialog.dismiss()
+                }
+        })
+
+    }
+
     private fun setSpiner() {
+        /*
+                val arrayAdapter = ArrayAdapter(
+                    this, android.R.layout.simple_spinner_item, currencylist
+                )
 
-        val arrayAdapter = ArrayAdapter(
-            this, android.R.layout.simple_spinner_item, currencylist
-        )
+                binding.spFrom.adapter = arrayAdapter
+                binding.spTo.adapter = arrayAdapter
 
-        binding.spFrom.adapter = arrayAdapter
-        binding.spTo.adapter = arrayAdapter
-
-        from = currencylist[0]
-        to = currencylist[0]
-
-
-        binding.spFrom.onItemSelectedListener
-
-        binding.spFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View, position: Int, id: Long
-            ) {
-                from = currencylist[position]
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
+                from = currencylist[0]
+                to = currencylist[0]
 
 
-        binding.spTo.onItemSelectedListener
+                binding.spFrom.onItemSelectedListener
 
-        binding.spTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>, view: View, position: Int, id: Long
-            ) {
-                to = currencylist[position]
-            }
+                binding.spFrom.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>, view: View, position: Int, id: Long
+                    ) {
+                        from = currencylist[position]
+                    }
 
-            override fun onNothingSelected(parent: AdapterView<*>) {
-                // write code to perform some action
-            }
-        }
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }
+
+
+                binding.spTo.onItemSelectedListener
+
+                binding.spTo.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+                    override fun onItemSelected(
+                        parent: AdapterView<*>, view: View, position: Int, id: Long
+                    ) {
+                        to = currencylist[position]
+                    }
+
+                    override fun onNothingSelected(parent: AdapterView<*>) {
+                        // write code to perform some action
+                    }
+                }*/
 
     }
 
@@ -166,7 +268,6 @@ class MainActivity : AppCompatActivity() {
                     ), "CNY"
                 )
             )
-
 
             //Rv set
             val adapter: ExchangeAdapter = ExchangeAdapter(lattestList)

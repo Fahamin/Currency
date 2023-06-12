@@ -1,0 +1,22 @@
+Forex Exchange Rate App is a powerful and easy-to-use app that provides you with the latest live currency
+ exchange rates from around the world. With this app, you can easily convert between any two currencies,
+ track the performance of your favorite currencies, and get insights into the global currency markets.
+
+Features:
+
+    Live currency exchange rates: Get the latest live currency exchange rates from the world's leading financial institutions.
+    Currency converter: Easily convert between any two currencies.
+    Currency charts: Track the performance of your favorite currencies over time.
+    Currency news: Stay up-to-date on the latest currency news and market insights.
+    User-friendly interface: The app is easy to use and navigate.
+
+Benefits:
+
+    Save money: With the latest live currency exchange rates, you can be sure to get the best possible exchange rate when 
+     you travel or make an international purchase.
+     Make informed decisions: By tracking the performance of your favorite currencies,
+     you can make more informed decisions about your investments and financial planning.
+     Stay ahead of the curve: With access to the latest currency news and market insights,
+     you can stay ahead of the curve and make the most of the global currency markets.
+
+Download Forex Exchange Rate App today and start saving money, making informed decisions, and staying ahead of the curve!
