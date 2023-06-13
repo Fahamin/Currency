@@ -3,7 +3,6 @@ package com.convert.usd.aud.currency.utill;
 
 import static android.content.Context.CLIPBOARD_SERVICE;
 
-import android.Manifest;
 import android.app.Activity;
 import android.app.DownloadManager;
 import android.content.ActivityNotFoundException;
@@ -33,7 +32,6 @@ import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 
 import com.convert.usd.aud.currency.R;
-import com.google.android.gms.ads.AdError;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdSize;
 import com.google.android.gms.ads.AdView;
@@ -47,7 +45,6 @@ import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback;
 
 import java.io.File;
 
-
 public class Fun {
 
     public static Context context;
@@ -56,7 +53,7 @@ public class Fun {
     private static InterstitialAd mInterstitialAd;
     private static RewardedAd mRewardedAd;
     private static int divider = 3;
-    private static int fc = 2;
+    private static int fc = 4;
     private static int admobon = 0;
     public static Activity activity;
     private FrameLayout adContainerView;
@@ -227,124 +224,5 @@ public class Fun {
 
     }
 
-    public static void copyItem(String s) {
-        ClipboardManager clipboard = (ClipboardManager) activity.getSystemService(CLIPBOARD_SERVICE);
-        ClipData clipe = ClipData.newPlainText("LINK", s);
 
-        if (clipboard != null) {
-            clipboard.setPrimaryClip(clipe);
-            Toast.makeText(activity, "Copied", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-
-    public static boolean haveStoragePermission() {
-        if (Build.VERSION.SDK_INT >= 23) {
-            if (ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                    == PackageManager.PERMISSION_GRANTED) {
-                //  Log.e("Permission error", "You have permission");
-                return true;
-            } else {
-
-                //  Log.e("Permission error", "You have asked for permission");
-                ActivityCompat.requestPermissions((Activity) activity, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-                Toast.makeText(activity, "Need to Permission for Download", Toast.LENGTH_SHORT).show();
-                return false;
-            }
-        } else { //you dont need to worry about these stuff below api level 23
-            //  Log.e("Permission error", "You already have the permission");
-            return true;
-        }
-    }
-
-    protected static boolean need2Download(String fileName) {
-
-        File basePath = new File("BOOK_STORE_PATH");
-
-        File fullPath = new File(basePath, fileName);
-
-        if (fullPath.exists())
-            return false;
-        return true;
-    }
-
-    public static void downLoadFromLink(String url) {
-        String fileName = url.substring(url.lastIndexOf('/') + 1);
-
-        if (haveStoragePermission() && checkInternet()) {
-            if (need2Download(fileName)) {
-
-                try {
-                    if (url != null && !url.isEmpty()) {
-                        Uri uri = Uri.parse(url);
-                        activity.registerReceiver(attachmentDownloadCompleteReceive, new IntentFilter(
-                                DownloadManager.ACTION_DOWNLOAD_COMPLETE));
-
-                        DownloadManager.Request request = new DownloadManager.Request(uri);
-                        request.setMimeType(getMimeType(uri));
-                        request.setTitle(fileName);
-                        request.setDescription("Downloading attachment..");
-                        request.setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
-                                .setAllowedOverMetered(true)
-                                .setAllowedOverRoaming(false)
-                                .setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName + "zip");
-                        DownloadManager dm = (DownloadManager) activity.getSystemService(activity.DOWNLOAD_SERVICE);
-                        dm.enqueue(request);
-                        Toast.makeText(activity, "Complete Download few second", Toast.LENGTH_SHORT).show();
-
-                    }
-
-                } catch (Exception e) {
-
-                }
-            }
-
-        } else
-            Toast.makeText(activity, "Check internet connection", Toast.LENGTH_SHORT).show();
-
-    }
-
-    public static String getMimeType(Uri uri) {
-        String mimeType = null;
-        if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
-            ContentResolver cr = activity.getContentResolver();
-            mimeType = cr.getType(uri);
-        } else {
-            String fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri
-                    .toString());
-            mimeType = MimeTypeMap.getSingleton().getMimeTypeFromExtension(
-                    fileExtension.toLowerCase());
-        }
-        return mimeType;
-    }
-
-    public static int dpToPx(int dp) {
-        Resources r = activity.getResources();
-        return Math.round(TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, r.getDisplayMetrics()));
-    }
-
-    public static void openPlayer() {
-
-        boolean isAppInstalled = appInstalledOrNot("org.xbmc.kodi");
-
-        if (isAppInstalled) {
-            Intent LaunchIntent = activity.getPackageManager()
-                    .getLaunchIntentForPackage("org.xbmc.kodi");
-            activity.startActivity(LaunchIntent);
-        } else {
-            Toast.makeText(activity, "Not Found kodi player", Toast.LENGTH_SHORT).show();
-
-        }
-    }
-
-
-    public static boolean appInstalledOrNot(String uri) {
-        PackageManager pm = activity.getPackageManager();
-        try {
-            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES);
-            return true;
-        } catch (PackageManager.NameNotFoundException e) {
-        }
-        return false;
-    }
 }

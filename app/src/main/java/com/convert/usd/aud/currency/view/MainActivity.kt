@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
@@ -25,6 +26,7 @@ import com.convert.usd.aud.currency.utill.Fun
 import com.convert.usd.aud.currency.utill.Fun.addShow
 import com.convert.usd.aud.currency.utill.Fun.showBannerAds
 import com.convert.usd.aud.currencyconverter.utill.Constance.Companion.APIKEY
+import com.convert.usd.aud.currencyconverter.utill.Constance.Companion.APIKEY2
 import com.convert.usd.aud.currencyconverter.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -86,7 +88,7 @@ class MainActivity : AppCompatActivity() {
             val editText =
                 dialog.findViewById<EditText>(R.id.edit_text)
             val cancle =
-                dialog.findViewById<ImageButton>(R.id.btnCancle)
+                dialog.findViewById<ImageView>(R.id.btnCancle)
             val listView =
                 dialog.findViewById<ListView>(R.id.list_view)
 
@@ -132,7 +134,7 @@ class MainActivity : AppCompatActivity() {
             dialog.window!!.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
             dialog.show()
             val cancle =
-                dialog.findViewById<ImageButton>(R.id.btnCancle)
+                dialog.findViewById<ImageView>(R.id.btnCancle)
             val editText =
                 dialog.findViewById<EditText>(R.id.edit_text)
             val listView =
@@ -225,7 +227,7 @@ class MainActivity : AppCompatActivity() {
         val ss =
             "AUD" + "," + "EUR" + "," + "CAD" + "," + "GBP" + "," + "CHF" + "," + "JPY" + "," + "NZD" + "," + "CNY"
 
-        mainActivityViewModel.getLatestRate(APIKEY, "USD", ss)
+        mainActivityViewModel.getLatestRate(APIKEY2, "USD", ss)
         mainActivityViewModel.latestValue.observe(this) {
             Log.e("rate", "" + it.body()?.response?.rates.toString())
 
