@@ -11,6 +11,7 @@ import android.view.View
 import android.widget.AdapterView.OnItemClickListener
 import android.widget.ArrayAdapter
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ListView
 import androidx.appcompat.app.AppCompatActivity
@@ -20,6 +21,9 @@ import com.convert.usd.aud.currency.R
 import com.convert.usd.aud.currency.adapter.ExchangeAdapter
 import com.convert.usd.aud.currency.databinding.ActivityMainBinding
 import com.convert.usd.aud.currency.model.RVmodel
+import com.convert.usd.aud.currency.utill.Fun
+import com.convert.usd.aud.currency.utill.Fun.addShow
+import com.convert.usd.aud.currency.utill.Fun.showBannerAds
 import com.convert.usd.aud.currencyconverter.utill.Constance.Companion.APIKEY
 import com.convert.usd.aud.currencyconverter.viewmodel.MainActivityViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -50,6 +54,9 @@ class MainActivity : AppCompatActivity() {
 
         mainActivityViewModel = ViewModelProvider(this)[MainActivityViewModel::class.java]
 
+        from = "AED"
+        to = "AED"
+
         currencylist =
             resources.getStringArray(com.convert.usd.aud.currency.R.array.symbols).toList()
         setDialog()
@@ -57,6 +64,9 @@ class MainActivity : AppCompatActivity() {
         binding.convertBtn.setOnClickListener(View.OnClickListener {
             callConvert(from, to)
         })
+
+        Fun(this, this)
+        showBannerAds(binding.adViewContainer, this)
 
         //convert rate
         lattestList = mutableListOf()
@@ -79,6 +89,10 @@ class MainActivity : AppCompatActivity() {
                 dialog.findViewById<ImageButton>(R.id.btnCancle)
             val listView =
                 dialog.findViewById<ListView>(R.id.list_view)
+
+            val ad_view_container =
+                dialog.findViewById<FrameLayout>(R.id.ad_view_container)
+            showBannerAds(ad_view_container, this@MainActivity)
 
             cancle.setOnClickListener(View.OnClickListener { dialog.dismiss() })
 
@@ -124,6 +138,9 @@ class MainActivity : AppCompatActivity() {
             val listView =
                 dialog.findViewById<ListView>(R.id.list_view)
             cancle.setOnClickListener(View.OnClickListener { dialog.dismiss() })
+            val ad_view_container =
+                dialog.findViewById<FrameLayout>(R.id.ad_view_container)
+            showBannerAds(ad_view_container, this@MainActivity)
 
             val adapter: ArrayAdapter<String> = ArrayAdapter<String>(
                 this@MainActivity,
@@ -280,6 +297,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun callConvert(from: String, to: String) {
 
+        addShow()
         mainActivityViewModel.getConvertValue(APIKEY, from, to, 1)
         mainActivityViewModel.convertValue.observe(this) {
             Log.e("latestRate", "" + it.body()?.rateResponse)

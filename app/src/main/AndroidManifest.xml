@@ -14,6 +14,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Currency"
         tools:targetApi="31">
+
         <activity
             android:name="com.convert.usd.aud.currencyconverter.view.MainActivity"
             android:exported="true">
@@ -23,6 +24,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.ads.APPLICATION_ID"
+            android:value="@string/admob_app_id" />
     </application>
 
 </manifest>
