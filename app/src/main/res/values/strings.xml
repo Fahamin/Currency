@@ -6,11 +6,10 @@
 
 
 
-    <string name="admob_insta_id">ca-app-pub-2234110845456855/9047739793</string>
-    <string name="admob_app_id">ca-app-pub-2234110845456855~9669760168</string>
-    <string name="admob_banner_id">ca-app-pub-2234110845456855/9573557248</string>
-    <string name="admob_native_id">ca-app-pub-2234110845456855/6354375260</string>
-    <string name="admob_reward_id">ca-app-pub-2234110845456855/6331120696</string>
+    <string name="admob_insta_id">ca-app-pub-2234110845456855/8727386577</string>
+    <string name="admob_app_id">ca-app-pub-2234110845456855~7279299889</string>
+    <string name="admob_banner_id">ca-app-pub-2234110845456855/7892300137</string>
+    <string name="admob_reward_id">ca-app-pub-2234110845456855/2639973450</string>
 
     <!-- //testadmob-->
  <!--   <string name="admob_insta_id">ca-app-pub-3940256099942544/1033173712</string>
